@@ -3,6 +3,8 @@ import Login from "./component/auth/Login";
 import Navbar from "./component/navbar/Navbar";
 import Home from "./component/home/Home";
 import Footer from "./component/footer/Footer";
+import Register from "./component/auth/Register";
+import CreateBlog from "./component/blog/CreateBlog";
 
 function App() {
     return (
@@ -13,8 +15,10 @@ function App() {
             <main>
                 <Routes>
 
-                    {/* <Route path="/login" element={<Login />} /> */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/create" element={<CreateBlog />} />
                 </Routes>
             </main>
             <footer>

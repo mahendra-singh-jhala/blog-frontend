@@ -41,7 +41,7 @@ const Home = ({ auth }) => {
         };
 
         fetchBlog();
-    }, [category, author]);
+    }, [category, author, token]);
 
     // Category filter change handler
     const handleCategoryChange = (value) => {

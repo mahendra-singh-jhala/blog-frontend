@@ -33,7 +33,7 @@ const MyBlog = ({ auth }) => {
         }
 
         fetchBlog()
-    }, [])
+    }, [token])
 
 
     // useEfect to delete user blogs
@@ -65,7 +65,7 @@ const MyBlog = ({ auth }) => {
                     <li key={blog._id} className="flex items-center w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4 mx-4 px-4 py-4 space-x-4">
                         <div>
                             <div className="w-80 h-40 overflow-hidden">
-                                <img src={blog.blogImage} className="object-cover w-full h-full" />
+                                <img src={blog.blogImage} alt={blog.title} className="object-cover w-full h-full" />
                             </div>
                         </div>
                         <div className="space-y-2">

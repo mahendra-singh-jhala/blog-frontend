@@ -26,7 +26,7 @@ const Home = ({ auth }) => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/blogs/blog?category=${category}&author=${author}`, {
+                const res = await axios.get(`https://blog-backend-2uco.onrender.com/api/blogs/blog?category=${category}&author=${author}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -72,9 +72,9 @@ const Home = ({ auth }) => {
                     </button>
                 </div>
                 <div className="grid grid-cols-12">
-                    <div className="col-span-3 border-r-4 space-y-2 pr-4">
+                    <div className={`col-span-3 border-r-4 space-y-2 pr-4 ${isOpen ? 'block' : 'hidden'} md:block`}>
                         <div className="mb-4">
-                            <h2 className="text-lg font-semibold mb-2">Filter by Category</h2>
+                            <h2 className="text-md md:text-lg font-semibold mb-2">Filter by Category</h2>
                             {categories.map((cat) => (
                                 <div key={cat} className="flex items-center mb-2">
                                     <input
@@ -90,7 +90,7 @@ const Home = ({ auth }) => {
                         </div>
 
                         <div className="mt-12">
-                            <h2 className="text-lg font-semibold mb-2">Search by Author</h2>
+                            <h2 className="text-md md:text-lg font-semibold mb-2">Search by Author</h2>
                             <input
                                 type="text"
                                 value={author}

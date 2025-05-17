@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-    const [auth] = useState(true)
+const Navbar = ({ auth }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleMenu = () => {
@@ -11,24 +10,21 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='w-full fixed top-0 z-50 bg-white'>
+        <nav className="w-full fixed top-0 z-50 bg-white">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 border-b-2">
                 <Link to="/" className="flex items-center space-x-3">
-                    <h1 className='text-4xl font-exile bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br text-transparent bg-clip-text'>
+                    <h1 className="text-4xl font-exile bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br text-transparent bg-clip-text">
                         BLOG
                     </h1>
                 </Link>
-                {auth && (
+                <div>
                     <button
                         type="button"
                         onClick={toggleMenu}
-                        className='inline-flex items-center justify-center w-8 h-8 text-purple-500 rounded-md md:hidden hover:bg-purple-600 hover:text-white border border-purple-600'
+                        className="inline-flex items-center justify-center w-8 h-8 text-purple-500 rounded-md md:hidden hover:bg-purple-600 hover:text-white border border-purple-600"
                     >
                         <FaBars className='w-5 h-5' />
                     </button>
-                )}
-
-                {auth ? (
                     <div
                         className={`transition-all duration-300 ${isOpen ? 'block' : 'hidden'} md:block`}
                         id="navbar"
@@ -57,13 +53,7 @@ const Navbar = () => {
                             </li>
                         </ul>
                     </div>
-                ) : (
-                    <div>
-                        <button className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br font-medium rounded-3xl text-sm px-5 py-2 text-center outline-none">
-                            Login
-                        </button>
-                    </div>
-                )}
+                </div>
             </div>
         </nav>
 

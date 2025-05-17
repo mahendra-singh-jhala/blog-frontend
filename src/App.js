@@ -5,25 +5,20 @@ import Home from "./component/home/Home";
 import Footer from "./component/footer/Footer";
 import Register from "./component/auth/Register";
 import CreateBlog from "./component/blog/CreateBlog";
+import { Toaster } from "react-hot-toast";
+import Header from "./component/navbar/Header";
 
 function App() {
     return (
         <Router>
-            <header>
-                <Navbar />
-            </header>
-            <main>
-                <Routes>
-
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="/create" element={<CreateBlog />} />
-                </Routes>
-            </main>
-            <footer>
-                <Footer />
-            </footer>
+            <Toaster position="top-right" />
+            <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/create" element={<CreateBlog />} />
+            </Routes>
         </Router>
     );
 }

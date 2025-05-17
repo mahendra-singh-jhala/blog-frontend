@@ -1,77 +1,136 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaFilter } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
-import Navbar from '../navbar/Navbar';
 import Footer from '../footer/Footer';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const Home = () => {
-    const [isOpen, setIsOpen] = useState(false)
+const categories = ["Finance", "Food", "Travel", "Career"];
+
+const Home = ({ auth }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [blogs, setBlogs] = useState([]);
+
+    const location = useLocation();
     const navigate = useNavigate();
+    const token = auth
+    const searchParams = new URLSearchParams(location.search);
+    const category = searchParams.get('category') || '';
+    const author = searchParams.get('author') || '';
 
-    // get auth token from localStorage
-    const authData = JSON.parse(localStorage.getItem("auth") || "{}");
-    const auth = authData.token || "";
-
-    // redirect login page if not authenticate
-    useEffect(() => {
-        if (!auth) {
-            navigate("/login");
-        }
-    }, [auth, navigate]);
-
-    // toggle the mobile menu
     const toggleMenu = () => {
-        setIsOpen(!isOpen)
-    }
+        setIsOpen(!isOpen);
+    };
+
+    // Fetch blogs on filter change
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/blogs/blog?category=${category}&author=${author}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (res.status === 200) {
+                    toast.success("Fetching blogs successfully");
+                    setBlogs(res.data.blog);
+                }
+            } catch (error) {
+                toast.error(error?.response?.data?.message || "Error fetching blogs, please try again");
+            }
+        };
+
+        fetchBlog();
+    }, [category, author]);
+
+    // Category filter change handler
+    const handleCategoryChange = (value) => {
+        const searchParams = new URLSearchParams(location.search);
+        if (category === value) {
+            searchParams.delete('category');
+        } else {
+            searchParams.set('category', value);
+        }
+
+        navigate({ search: `?${searchParams.toString()}` });
+    };
+
+    // Author input change handler
+    const handleAuthorChange = (e) => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set('author', e.target.value);
+        navigate({ search: `?${searchParams.toString()}` });
+    };
 
     return (
         <div>
-            <header>
-                <Navbar auth={auth} />
-            </header>
-            <main>
-                <div className="min-h-screen max-w-screen mx-10 md:mx-20 pt-16">
-                    <div className="flex items-center justify-between border-b-2 my-4 p-2">
-                        <h1 className='uppercase font-bold text-4xl'>
-                            Blogs
-                        </h1>
-                        <button className="inline-flex items-center justify-center md:hidden">
-                            <FaFilter />
-                        </button>
+            <div className="min-h-screen max-w-screen mx-10 md:mx-20 pt-16">
+                <div className="flex items-center justify-between border-b-2 my-4 p-2">
+                    <h1 className='uppercase font-bold text-4xl'>Blogs</h1>
+                    <button className="inline-flex items-center justify-center md:hidden" onClick={toggleMenu}>
+                        <FaFilter />
+                    </button>
+                </div>
+                <div className="grid grid-cols-12">
+                    <div className="col-span-3 border-r-4 space-y-2 pr-4">
+                        <div className="mb-4">
+                            <h2 className="text-lg font-semibold mb-2">Filter by Category</h2>
+                            {categories.map((cat) => (
+                                <div key={cat} className="flex items-center mb-2">
+                                    <input
+                                        type="checkbox"
+                                        value={cat}
+                                        checked={category === cat}
+                                        onChange={() => handleCategoryChange(cat)}
+                                        className="mr-2"
+                                    />
+                                    <label>{cat}</label>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-12">
+                            <h2 className="text-lg font-semibold mb-2">Search by Author</h2>
+                            <input
+                                type="text"
+                                value={author}
+                                onChange={handleAuthorChange}
+                                placeholder="Type author name"
+                                className="w-full border px-2 py-1 rounded"
+                            />
+                        </div>
                     </div>
-                    <div className="grid grid-cols-12">
-                        <div className="col-span-2 border-r-2">
-                            black
-                        </div>
-                        <div className="col-span-10">
-                            <ul className="flex flex-wrap justify-evenly">
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
-                                    <Link>
-                                        <li className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4 mx-4 px-4 py-4 transform transition duration-500 hover:scale-90">
-                                            <div>
-                                                <div className="w-full h-40 overflow-hidden">
-                                                    <img src="https://d2j6dbq0eux0bg.cloudfront.net/images/66610504/2636936256.jpg" className="object-cover w-full h-full" />
-                                                </div>
+                    <div className="col-span-9">
+                        <ul className="flex flex-wrap justify-evenly">
+                            {blogs.length > 0 ? (
+                                blogs.map((blog) => (
+                                    <li key={blog._id} className="flex items-center w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4 mx-4 px-4 py-4 space-x-4">
+                                        <div className="w-80 h-40 overflow-hidden">
+                                            <img src={blog.blogImage} alt={blog.title} className="object-cover w-full h-full" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-xl text-gray-800 font-bold">{blog.title}</p>
+                                            <div className="space-y-3">
+                                                <p className="text-sm text-gray-600 font-semibold">{blog.content}</p>
+                                                <p className="text-sm text-gray-600 font-semibold"><strong>Category:</strong> {blog.category}</p>
+                                                <p className="text-sm text-gray-600 font-semibold"><strong>Author:</strong> {blog.author}</p>
+                                                <p className="text-xs font-semibold">{new Date(blog.createdAt).toLocaleDateString()}</p>
                                             </div>
-                                            <h2 className="font-bold text-xl mt-2"></h2>
-                                            <div className="mt-4">
-                                                <p className="text-sm text-gray-800 font-semibold"><strong className="text-md">for websit building </strong> </p>
-                                                <p className="text-sm text-gray-800 font-semibold"> hash sing </p>
-                                                <p className="text-sm text-gray-800 font-semibold">12 dec 2025 </p>
-                                            </div>
-                                        </li>
-                                    </Link>
-                                ))}
-                            </ul>
-                        </div>
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <p className="text-center text-gray-500">No blogs found for the selected filters.</p>
+                            )}
+                        </ul>
                     </div>
                 </div>
-            </main>
+            </div>
             <footer>
                 <Footer />
             </footer>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

@@ -7,7 +7,6 @@ import Register from '../component/auth/Register';
 import Blog from '../component/blog/Blog';
 
 const UserRoutes = () => {
-    const navigate = useNavigate();
     // get auth token from localStorage
     const authData = JSON.parse(localStorage.getItem("auth") || "{}");
     const auth = authData.token || "";

@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
 import { FaBars } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Navbar = ({ auth }) => {
+const Navbar = ({ auth, handleLogout }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const navigate = useNavigate()
+    
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
     }
 
-    const Logout = () => {
-        localStorage.clear();
-        navigate("/login")
-    }
-
     return (
         <nav className="w-full fixed top-0 z-50 bg-white">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 border-b-2">
-                <Link to="/" className="flex items-center space-x-3">
+                <Link to={auth ? "/home" : "/" } className="flex items-center space-x-3">
                     <h1 className="text-4xl font-exile bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br text-transparent bg-clip-text">
                         BLOG
                     </h1>
@@ -38,7 +33,7 @@ const Navbar = ({ auth }) => {
                     >
                         <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 md:flex-row md:mt-0 md:border-0">
                             <li>
-                                <Link to="/"
+                                <Link to="/home"
                                     className="text-md transition-all duration-300 md:p-0 block py-2 px-3 md:py-0 md:px-0 hover:text-orange-300 hover:border-b-2 hover:border-orange-500"
                                 >
                                     Home
@@ -52,7 +47,7 @@ const Navbar = ({ auth }) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link onClick={Logout}
+                                <Link onClick={handleLogout}
                                     className="text-md transition-all duration-300 md:p-0 block py-2 px-3 md:py-0 md:px-0 hover:text-orange-300 hover:border-b-2 hover:border-orange-500"
                                 >
                                     Logout

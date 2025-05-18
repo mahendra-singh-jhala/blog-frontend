@@ -26,7 +26,7 @@ const Login = () => {
                 localStorage.setItem("auth", JSON.stringify(data))
                 setEmail("");
                 setPassword("");
-                navigate("/")
+                window.location.href = "/home";
             }
 
         } catch (error) {

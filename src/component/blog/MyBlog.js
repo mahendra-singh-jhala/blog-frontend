@@ -14,7 +14,7 @@ const MyBlog = ({ auth }) => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get("https://blog-backend-2uco.onrender.com/api/blogs", {
+                const res = await axios.get("http://localhost:5000/api/blogs", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -39,7 +39,7 @@ const MyBlog = ({ auth }) => {
     // useEfect to delete user blogs
     const handledeleteBlog = async (id) => {
         try {
-            const res = await axios.delete(`https://blog-backend-2uco.onrender.com/api/blogs/${id}`, {
+            const res = await axios.delete(`http://localhost:5000/api/blogs/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -96,29 +96,3 @@ const MyBlog = ({ auth }) => {
 }
 
 export default MyBlog
-
-
-
-// < div >
-//     <ul className="flex flex-wrap justify-evenly">
-//         {blog.length > 0 && blog.map((blog) => (
-//             <Link>
-//                 <li key={blog._id} className="max-w-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-4 mx-4 px-4 py-4 transform transition duration-500 hover:scale-90">
-//                     <div>
-//                         <div className="w-full h-40 overflow-hidden">
-//                             <img src={blog.blogImage} className="object-cover w-full h-full" />
-//                         </div>
-//                     </div>
-//                     <h2 className="font-bold text-xl mt-2"></h2>
-//                     <div className="mt-4 space-y-3">
-//                         <p className="text-xl text-gray-800 font-bold">{blog.title} </p>
-//                         <div className="text-md text-gray-400 space-y-1">
-//                             <p className="text-gray-600"> {blog.author} </p>
-//                             <p className="text-xs"> {new Date(blog.createdAt).toLocaleDateString()}</p>
-//                         </div>
-//                     </div>
-//                 </li>
-//             </Link>
-//         ))}
-//     </ul>
-// </div >

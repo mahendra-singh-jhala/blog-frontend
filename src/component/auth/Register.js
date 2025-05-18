@@ -15,7 +15,7 @@ const Register = () => {
 
         const user = { name, email, password };
         try {
-            const res = await axios.post("https://blog-backend-2uco.onrender.com/api/auth/signup", user, {
+            const res = await axios.post("http://localhost:5000/api/auth/signup", user, {
                 headers: {
                     "Content-type": "application/json",
                 }

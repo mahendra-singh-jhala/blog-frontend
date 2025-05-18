@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const CreateBlog = ({auth}) => {
     const [title, setTitle] = useState("")
@@ -8,6 +9,7 @@ const CreateBlog = ({auth}) => {
     const [category, setCategory] = useState("")
     const [image, setImage] = useState("")
     const token = auth
+    const navigate = useNavigate()
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
@@ -15,7 +17,7 @@ const CreateBlog = ({auth}) => {
 
         const formData = { title, content, category, image }
         try {
-            const res = await axios.post("https://blog-backend-2uco.onrender.com/api/blogs", formData, {
+            const res = await axios.post("http://localhost:5000/api/blogs", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -26,6 +28,7 @@ const CreateBlog = ({auth}) => {
                 setContent("")
                 setCategory("")
                 setImage("")
+                navigate("/blog")
             }
         } catch (error) {
             if (error.response) {

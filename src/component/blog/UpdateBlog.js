@@ -9,12 +9,13 @@ const UpdateBlog = ({ onClose, id, auth, setBlog }) => {
     const [image, setImage] = useState("")
     const token = auth
 
+
     // Function to handle update blog
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = { title, content, category, image }
         try {
-            const res = await axios.put(`https://blog-backend-2uco.onrender.com/api/blogs/${id}`, formData, {
+            const res = await axios.put(`http://localhost:5000/api/blogs/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -22,7 +23,7 @@ const UpdateBlog = ({ onClose, id, auth, setBlog }) => {
             if (res.status === 200) {
                 toast.success("Update successful");
                 setBlog(prev =>
-                    prev.map(b => b._id === res._id ? res.data : b)
+                    prev.map(b => b._id === res.data.updateblog._id ? res.data.updateblog  : b)
                 );
                 onClose();
             }

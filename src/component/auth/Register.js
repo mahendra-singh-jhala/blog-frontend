@@ -79,7 +79,7 @@ const Register = () => {
                         />
                     </div>
 
-                    <Link to='/login' className="text-sm text-gray-600 hover:underline hover:text-blue-600 mt-6 inline-block cursor-pointer">
+                    <Link to='/' className="text-sm text-gray-600 hover:underline hover:text-blue-600 mt-6 inline-block cursor-pointer">
                         Already have an account?
                     </Link>
                     <button type="submit" className="w-full flex items-center justify-center px-5 py-2 text-md font-medium text-center bg-gray-400 bg-opacity-50 rounded cursor-pointer hover:text-slate-900 mt-1">

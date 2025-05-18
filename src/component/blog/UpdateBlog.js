@@ -14,7 +14,7 @@ const UpdateBlog = ({ onClose, id, auth, setBlog }) => {
         e.preventDefault();
         const formData = { title, content, category, image }
         try {
-            const res = await axios.put(`https://blog-backend-2uco.onrender.com/api/blogs/${id}`, formData, {
+            const res = await axios.put(`http://localhost:5000/api/blogs/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

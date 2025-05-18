@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Navbar from '../component/navbar/Navbar';
 import Home from '../component/home/Home';
@@ -12,13 +12,6 @@ const UserRoutes = () => {
     const authData = JSON.parse(localStorage.getItem("auth") || "{}");
     const auth = authData.token || "";
 
-    // redirect login page if not authenticate
-    useEffect(() => {
-        if (!auth) {
-            navigate("/login");
-        }
-    }, [auth, navigate]);
-
     return (
         <div>
             <header>
@@ -26,10 +19,18 @@ const UserRoutes = () => {
             </header>
             <main>
                 <Routes>
-                    <Route path="/" element={<Home auth={auth} />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/blog/*" element={<Blog auth={auth} />} />
+                    {!auth ? (
+                        <>
+                            <Route path="/" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                        </>
+                    ) : (
+                        <>
+                            <Route path="/" element={<Home auth={auth} />} />
+                            <Route path="/blog/*" element={<Blog auth={auth} />} />
+                        </>
+                    )}
+
                 </Routes>
             </main>
         </div>

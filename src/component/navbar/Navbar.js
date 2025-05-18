@@ -61,7 +61,7 @@ const Navbar = ({ auth }) => {
                         </ul>
                     </div>
                 ) : (
-                    <Link to="/login">
+                    <Link to="/">
                         <button className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br font-medium rounded-3xl text-sm px-5 py-2 text-center outline-none">
                             Login
                         </button>

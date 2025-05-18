@@ -14,7 +14,7 @@ const MyBlog = ({ auth }) => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get("https://blog-backend-2uco.onrender.com/api/blogs", {
+                const res = await axios.get("http://localhost:5000/api/blogs", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -39,7 +39,7 @@ const MyBlog = ({ auth }) => {
     // useEfect to delete user blogs
     const handledeleteBlog = async (id) => {
         try {
-            const res = await axios.delete(`https://blog-backend-2uco.onrender.com/api/blogs/${id}`, {
+            const res = await axios.delete(`http://localhost:5000/api/blogs/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -26,7 +26,7 @@ const Home = ({ auth }) => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/blogs/blog?category=${category}&author=${author}`, {
+                const res = await axios.get(`https://blog-backend-2uco.onrender.com/api/blogs/blog?category=${category}&author=${author}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

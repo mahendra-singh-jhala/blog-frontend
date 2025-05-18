@@ -26,7 +26,7 @@ const Register = () => {
                 setName("");
                 setEmail("");
                 setPassword("");
-                navigate("/login")
+                navigate("/")
             }
 
         } catch (error) {

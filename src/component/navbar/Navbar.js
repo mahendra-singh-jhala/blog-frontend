@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({ auth, handleLogout }) => {
     const [isOpen, setIsOpen] = useState(false)
-    
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)

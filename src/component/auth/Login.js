@@ -13,7 +13,7 @@ const Login = () => {
 
         const user = { email, password };
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/login", user, {
+            const res = await axios.post("https://blog-backend-2uco.onrender.com/api/auth/login", user, {
                 headers: {
                     "Content-type": "application/json",
                 }

@@ -17,7 +17,7 @@ const CreateBlog = ({auth}) => {
 
         const formData = { title, content, category, image }
         try {
-            const res = await axios.post("http://localhost:5000/api/blogs", formData, {
+            const res = await axios.post("https://blog-backend-2uco.onrender.com/api/blogs", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
